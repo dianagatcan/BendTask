@@ -1,7 +1,8 @@
 <div class="rectangle">
+    <div *ngIf="rectangle.joinedWith !== null" class="line colored"></div>
+    <div *ngIf="rectangle.joinedWith === null" class="line"></div>
     <div class="content">
         <div class="top-right">{{rectangle.sku}}</div>
         <div class="center">{{rectangle.defaultSku}}</div>
     </div>
-    <div class="line"></div>
 </div>
