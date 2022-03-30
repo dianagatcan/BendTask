@@ -1,0 +1,10 @@
+.zone-rectangles {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+h1 {
+  font-size: 10px;
+  font-weight: normal;
+}
