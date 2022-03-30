@@ -2,8 +2,10 @@
     <div *ngIf="rectangle.joinedWith !== null" class="line colored"></div>
     <div *ngIf="rectangle.joinedWith === null" class="line"></div>
     <div class="content">
-        <div class="status"></div>
-        <div class="top-right">{{rectangle.sku}}</div>
-        <div class="center">{{rectangle.defaultSku}}</div>
+        <div *ngIf="rectangle.joinedWith === null" class={{mode}}></div>
+        <div class="text">
+            <div class="top-right">{{rectangle.sku}}</div>
+            <div class="center">{{rectangle.defaultSku}}</div>
+        </div>
     </div>
 </div>

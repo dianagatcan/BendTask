@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { empty } from 'rxjs';
 import data from "src/assets/new-things.json"
 import { JsonObj } from '../type';
 
@@ -18,6 +19,13 @@ export class ZoneComponent implements OnInit {
   headNodes:JsonObj[]=[]
   //ordered list composed of each headNode + followers(rectangles that have joinedWith = to headNode.id)
   orderedRectangles:JsonObj[]=[]
+  //ordered list composed of each (headNode + followers) mode
+  //mode = open, ajar, closed or empty
+  //open = single headNodes with open status OR headNodes + followers are all open
+  //closed = single headNodes with closed status OR headNodes + followers are all closed
+  //ajar = headNodes with followers where at least one node is open and one is closed
+  //empty = follower nodes
+  orderedModes:string[]=[] 
 
   constructor() { }
 
@@ -32,9 +40,34 @@ export class ZoneComponent implements OnInit {
       this.orderedRectangles.push(headNode)
       this.orderedRectangles.push(...this.rectangles.filter(obj => obj.joinedWith === headNode.id))
     } )
+
+    this.orderedRectangles.forEach(rectangle => {
+      this.orderedModes.push(decideMode(rectangle, this.orderedRectangles))
+    })
+
+
   }
 
 }
+
+
+function decideMode(rectangle:JsonObj, orderedRectangles:JsonObj[]){
+  if(rectangle.joinedWith !== null){
+    return 'empty'
+  }
+  if(rectangle.status === "open" && 
+  orderedRectangles.filter(follower => follower.joinedWith === rectangle.id).every(follower => follower.status === "open")){
+    return "open"
+  }
+  if(rectangle.status === "closed" && 
+  orderedRectangles.filter(follower => follower.joinedWith === rectangle.id).every(follower => follower.status === "closed")){
+    return "closed"
+  }
+  return 'ajar'
+
+}
+
+
 
 function decideHeading(areaId:number) : string{
   if(areaId === 1791){

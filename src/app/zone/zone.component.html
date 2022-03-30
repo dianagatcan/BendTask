@@ -2,7 +2,6 @@
 <div class="zone-container">
     <h1>{{heading}}</h1>
     <div class="zone-rectangles">
-        <app-rectangle *ngFor="let rectangle of orderedRectangles" [rectangle]="rectangle"></app-rectangle>
+        <app-rectangle *ngFor="let rectangle of orderedRectangles; let i = index"  [mode]="orderedModes[i]" [rectangle]="rectangle"></app-rectangle>
      </div>
-
 </div>

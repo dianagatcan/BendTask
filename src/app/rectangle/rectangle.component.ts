@@ -17,6 +17,7 @@ export class RectangleComponent implements OnInit {
     joinedWith: null,
     status: ""
   };
+  @Input() mode:string ='';
 
 
   constructor() { 
